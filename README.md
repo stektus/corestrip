@@ -102,11 +102,10 @@ Pushing a `v*` tag builds the bundle in CI and attaches it to the GitHub
 release, so the file on the store and the file on the release page are the
 same build.
 
-For Arch/Manjaro users, [packaging/aur/PKGBUILD](packaging/aur/PKGBUILD) is the
-template for an AUR package; the header lists the steps (tag a release,
-`updpkgsums`, `makepkg --printsrcinfo > .SRCINFO`, push to the AUR repo). Once
-published, Manjaro's *Add/Remove Software* installs it like any other package
-when AUR support is enabled.
+For Arch/Manjaro users, [packaging/aur/](packaging/aur/) holds a ready
+`PKGBUILD` and `.SRCINFO` pinned to the v1.0.0 release tarball — copy both into
+a clone of the AUR repository and push. Once published, Manjaro's *Add/Remove
+Software* installs it like any other package when AUR support is enabled.
 
 ## Layout
 

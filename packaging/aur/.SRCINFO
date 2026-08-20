@@ -1,0 +1,15 @@
+pkgbase = plasma6-applets-corestrip
+	pkgdesc = Plasma 6 panel widget for CPU, GPU, memory and network load
+	pkgver = 1.0.0
+	pkgrel = 1
+	url = https://github.com/stektus/corestrip
+	arch = any
+	license = MIT
+	depends = plasma-workspace
+	depends = ksystemstats
+	depends = libksysguard
+	optdepends = nvidia-utils: NVIDIA GPU readings
+	source = plasma6-applets-corestrip-1.0.0.tar.gz::https://github.com/stektus/corestrip/archive/refs/tags/v1.0.0.tar.gz
+	sha256sums = 6c0c5dd13f7d7298d1af7f175ba7a355fa71bf31f6ef914fc39d5118619f516e
+
+pkgname = plasma6-applets-corestrip

@@ -1,10 +1,10 @@
 # Maintainer: stektus <stektus@users.noreply.github.com>
 #
-# Template for publishing to the AUR. Before the first push:
-#   1. set `url` to the public repository and tag a release (v$pkgver),
-#   2. run `updpkgsums` to replace the SKIP checksum with the real one,
-#   3. run `makepkg --printsrcinfo > .SRCINFO`,
-#   4. commit PKGBUILD and .SRCINFO to ssh://aur@aur.archlinux.org/$pkgname.git
+# Ready to publish to the AUR: copy this file and .SRCINFO into a clone of
+# ssh://aur@aur.archlinux.org/plasma6-applets-corestrip.git and push.
+#
+# When releasing a new version, bump pkgver, then run `updpkgsums` and
+# `makepkg --printsrcinfo > .SRCINFO` again.
 #
 pkgname=plasma6-applets-corestrip
 pkgver=1.0.0
@@ -16,7 +16,7 @@ license=('MIT')
 depends=('plasma-workspace' 'ksystemstats' 'libksysguard')
 optdepends=('nvidia-utils: NVIDIA GPU readings')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('SKIP')
+sha256sums=('6c0c5dd13f7d7298d1af7f175ba7a355fa71bf31f6ef914fc39d5118619f516e')
 
 package() {
     cd "$srcdir/${url##*/}-$pkgver"
