@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+                          http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
+    <kcfgfile name=""/>
+
+    <group name="General">
+        <!-- Panel gauges -->
+        <entry name="compactStyle" type="String">
+            <default>combo</default>
+        </entry>
+        <entry name="showCpu" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="showGpu" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="showMemory" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="showNetwork" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="showDisk" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="showTemperature" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="showLabels" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="panelGpu" type="String">
+            <!-- sensor object id of the GPU shown in the panel, "auto" = first one -->
+            <default>auto</default>
+        </entry>
+        <entry name="updateInterval" type="Int">
+            <default>2000</default>
+        </entry>
+
+        <!-- Popup sections -->
+        <entry name="popupCores" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="popupGpu" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="popupMemory" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="popupNetwork" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="popupDisk" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="popupBattery" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="popupProcesses" type="Bool">
+            <default>true</default>
+        </entry>
+    </group>
+</kcfg>

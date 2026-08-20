@@ -1,0 +1,7 @@
+*.kdev4
+.directory
+pkg/
+src/
+*.pkg.tar.*
+*.tar.gz
+dist/

@@ -1,0 +1,21 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "stektus@users.noreply.github.com",
+                "Name": "stektus"
+            }
+        ],
+        "BugReportUrl": "https://github.com/stektus/corestrip/issues",
+        "Category": "System Information",
+        "Description": "Compact CPU, GPU, memory and network gauges for the panel, with a detailed popup",
+        "Icon": "speedometer",
+        "Id": "io.github.stektus.corestrip",
+        "License": "MIT",
+        "Name": "Corestrip",
+        "Version": "1.0.0",
+        "Website": "https://github.com/stektus/corestrip"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0"
+}

@@ -1,0 +1,31 @@
+# Maintainer: stektus <stektus@users.noreply.github.com>
+#
+# Template for publishing to the AUR. Before the first push:
+#   1. set `url` to the public repository and tag a release (v$pkgver),
+#   2. run `updpkgsums` to replace the SKIP checksum with the real one,
+#   3. run `makepkg --printsrcinfo > .SRCINFO`,
+#   4. commit PKGBUILD and .SRCINFO to ssh://aur@aur.archlinux.org/$pkgname.git
+#
+pkgname=plasma6-applets-corestrip
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="Plasma 6 panel widget for CPU, GPU, memory and network load"
+arch=('any')
+url="https://github.com/stektus/corestrip"
+license=('MIT')
+depends=('plasma-workspace' 'ksystemstats' 'libksysguard')
+optdepends=('nvidia-utils: NVIDIA GPU readings')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
+sha256sums=('SKIP')
+
+package() {
+    cd "$srcdir/${url##*/}-$pkgver"
+
+    local appletdir="$pkgdir/usr/share/plasma/plasmoids/io.github.stektus.corestrip"
+    install -dm755 "$appletdir"
+    cp -r package/. "$appletdir/"
+    find "$appletdir" -type f -exec chmod 644 {} +
+    find "$appletdir" -type d -exec chmod 755 {} +
+
+    install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
