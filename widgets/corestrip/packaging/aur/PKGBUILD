@@ -4,7 +4,9 @@
 # ssh://aur@aur.archlinux.org/plasma6-applets-corestrip.git and push.
 #
 # When releasing a new version, bump pkgver, then run `updpkgsums` and
-# `makepkg --printsrcinfo > .SRCINFO` again.
+# `makepkg --printsrcinfo > .SRCINFO` again. Note that from the release after
+# v1.0.0 the sources live in widgets/corestrip/ inside the tarball, so the
+# package() paths need the extra prefix.
 #
 pkgname=plasma6-applets-corestrip
 pkgver=1.0.0

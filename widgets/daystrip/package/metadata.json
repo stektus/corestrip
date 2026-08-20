@@ -1,0 +1,21 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "stektus@users.noreply.github.com",
+                "Name": "stektus"
+            }
+        ],
+        "BugReportUrl": "https://github.com/stektus/corestrip/issues",
+        "Category": "Date and Time",
+        "Description": "Clock, date and weather in the panel, with a calendar, forecast and agenda in the popup",
+        "Icon": "clock",
+        "Id": "io.github.stektus.daystrip",
+        "License": "MIT",
+        "Name": "Daystrip",
+        "Version": "1.0.0",
+        "Website": "https://github.com/stektus/corestrip"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0"
+}

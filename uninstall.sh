@@ -1,6 +1,19 @@
 #!/bin/bash
-# Remove the widget for the current user.
+# Remove a widget for the current user.
+#
+#   ./uninstall.sh corestrip
 set -euo pipefail
 
-kpackagetool6 --type Plasma/Applet --remove io.github.stektus.corestrip
-echo "Removed. Remove it from the panel first if it is still there."
+cd "$(dirname "$0")"
+
+widgets=("$@")
+if [ ${#widgets[@]} -eq 0 ]; then
+    mapfile -t widgets < <(cd widgets && ls -d */ | tr -d /)
+fi
+
+for widget in "${widgets[@]}"; do
+    root="widgets/$widget/package"
+    id=$(python3 -c "import json;print(json.load(open('$root/metadata.json'))['KPlugin']['Id'])")
+    kpackagetool6 --type Plasma/Applet --remove "$id"
+    echo "Removed $widget ($id)"
+done

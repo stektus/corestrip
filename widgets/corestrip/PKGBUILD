@@ -1,4 +1,7 @@
 # Maintainer: stektus <stektus@users.noreply.github.com>
+#
+# Builds from this checkout: run makepkg in this directory.
+# For the AUR package see packaging/aur/.
 pkgname=plasma6-applets-corestrip
 pkgver=1.0.0
 pkgrel=1
@@ -17,5 +20,5 @@ package() {
     find "$appletdir" -type f -exec chmod 644 {} +
     find "$appletdir" -type d -exec chmod 755 {} +
 
-    install -Dm644 "$startdir/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    install -Dm644 "$startdir/../../LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }

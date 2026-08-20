@@ -14,19 +14,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check the tag matches the package version
-        run: |
-          version=$(python3 -c "import json;print(json.load(open('package/metadata.json'))['KPlugin']['Version'])")
-          tag="${GITHUB_REF_NAME#v}"
-          if [ "$version" != "$tag" ]; then
-            echo "metadata.json says $version but the tag says $tag" >&2
-            exit 1
-          fi
-
-      - name: Build the .plasmoid bundle
+      - name: Build every .plasmoid bundle
         run: ./package.sh
 
-      - name: Attach the bundle to the release
+      - name: Attach the bundles to the release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
