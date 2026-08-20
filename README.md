@@ -96,7 +96,7 @@ The bundle is a plain zip with `metadata.json` at its root, which is what both
 to store.kde.org under *Plasma 6 → Plasma Widgets* makes it installable from
 inside Plasma (*Add Widgets… → Get New Widgets…*) and visible in Discover.
 `docs/panel.png`, `docs/popup.png` and `docs/panel-styles.png` are sized for a
-store listing.
+store listing, and `docs/logo.png` is the 512×512 product logo.
 
 Pushing a `v*` tag builds the bundle in CI and attaches it to the GitHub
 release, so the file on the store and the file on the release page are the
