@@ -10,3 +10,5 @@ First release.
 - Reads MPRIS2, so browsers and desktop players are both understood.
 - Five equalizer styles; the colour can be taken from the album art.
 - Scroll wheel changes the volume, middle click plays or pauses.
+- Equalizer, buttons and cover all follow the text size setting, and the bars
+  carry falling peak caps.

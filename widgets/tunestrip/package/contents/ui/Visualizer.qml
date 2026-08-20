@@ -28,6 +28,9 @@ Canvas {
 
     property var levels: []
     property var targets: []
+    /* Where each column last peaked. The cap that hangs above a falling bar is
+       what makes a row of rectangles read as an equalizer. */
+    property var peaks: []
     property int frame: 0
 
     implicitWidth: Math.round(columns * 4)
@@ -46,6 +49,7 @@ Canvas {
             next.push(floorLevel)
         levels = next
         targets = next.slice()
+        peaks = next.slice()
         requestPaint()
     }
 
@@ -66,13 +70,16 @@ Canvas {
             visualizer.frame++
             var levels = visualizer.levels
             var targets = visualizer.targets
+            var peaks = visualizer.peaks
             for (var i = 0; i < visualizer.columns; i++) {
                 if (visualizer.frame % 3 === 0)
                     targets[i] = visualizer.targetFor(i, visualizer.frame)
                 /* Rising is quicker than falling — that is what makes it read
                    as sound rather than as a wobble. */
-                var rate = targets[i] > levels[i] ? 0.55 : 0.22
+                var rate = targets[i] > levels[i] ? 0.6 : 0.18
                 levels[i] += (targets[i] - levels[i]) * rate
+                peaks[i] = levels[i] > peaks[i] ? levels[i]
+                                                : Math.max(levels[i], peaks[i] - 0.03)
             }
             visualizer.requestPaint()
         }
@@ -87,10 +94,13 @@ Canvas {
         repeat: true
         onTriggered: {
             var levels = visualizer.levels
+            var peaks = visualizer.peaks
             var atRest = true
             for (var i = 0; i < visualizer.columns; i++) {
                 levels[i] += (visualizer.floorLevel - levels[i]) * 0.25
-                if (Math.abs(levels[i] - visualizer.floorLevel) > 0.005)
+                peaks[i] = Math.max(levels[i], peaks[i] - 0.05)
+                if (Math.abs(levels[i] - visualizer.floorLevel) > 0.005
+                        || peaks[i] - levels[i] > 0.01)
                     atRest = false
             }
             visualizer.requestPaint()
@@ -127,25 +137,37 @@ Canvas {
        row of tiles. */
     function columnGeometry() {
         var slot = width / columns
-        var barWidth = Math.max(1, Math.min(slot * 0.62, height * 0.5))
+        var barWidth = Math.max(1, Math.min(slot * 0.58, height * 0.5))
         return { slot: slot, barWidth: barWidth, offset: (slot - barWidth) / 2 }
     }
 
     function paintBars(ctx) {
         var g = columnGeometry()
-        var radius = Math.min(g.barWidth / 2, height * 0.12)
+        var radius = Math.min(g.barWidth / 2, height * 0.14)
+        var capHeight = Math.max(1.5, height * 0.07)
         for (var i = 0; i < columns; i++) {
             var level = Util.clamp01(levels[i])
             var barHeight = Math.max(radius * 2, height * level)
             var x = i * g.slot + g.offset
             var y = height - barHeight
+
             var gradient = ctx.createLinearGradient(0, y, 0, height)
-            gradient.addColorStop(0, Qt.rgba(color.r, color.g, color.b, 0.95))
-            gradient.addColorStop(1, Qt.rgba(color.r, color.g, color.b, 0.45))
+            gradient.addColorStop(0, Qt.rgba(color.r, color.g, color.b, 1))
+            gradient.addColorStop(1, Qt.rgba(color.r, color.g, color.b, 0.4))
             ctx.fillStyle = gradient
             ctx.beginPath()
             ctx.roundedRect(x, y, g.barWidth, barHeight, radius, radius)
             ctx.fill()
+
+            var peak = Util.clamp01(peaks[i])
+            var peakY = height - Math.max(capHeight, height * peak)
+            if (peakY < y - capHeight * 0.6) {
+                ctx.fillStyle = Qt.rgba(color.r, color.g, color.b, 0.75)
+                ctx.beginPath()
+                ctx.roundedRect(x, peakY, g.barWidth, capHeight,
+                                capHeight / 2, capHeight / 2)
+                ctx.fill()
+            }
         }
     }
 

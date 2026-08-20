@@ -13,3 +13,5 @@ First release.
 - Events from any iCalendar address, including Google's secret iCal links,
   with recurring events and exception dates.
 - Weather symbols drawn by the widget, so they do not depend on the icon theme.
+- The date sits closer to the clock in size and weight, so raising the text
+  size lifts it visibly too.

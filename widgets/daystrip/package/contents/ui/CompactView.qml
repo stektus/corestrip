@@ -56,11 +56,11 @@ MouseArea {
     readonly property int inlineTimeSize: Math.round(Math.max(9, Math.min(available * 0.84,
                                                                           available * 0.58 * fontFactor,
                                                                           widthLimit * Math.min(1, fontFactor))))
-    readonly property int inlineDateSize: Math.round(Math.max(8, inlineTimeSize * 0.72))
+    readonly property int inlineDateSize: Math.round(Math.max(8, inlineTimeSize * 0.82))
     readonly property int stackedTimeSize: Math.round(Math.max(9, Math.min(available * 0.52,
                                                                            available * 0.46 * fontFactor,
                                                                            widthLimit * Math.min(1, fontFactor))))
-    readonly property int stackedDateSize: Math.round(Math.max(8, stackedTimeSize * 0.68))
+    readonly property int stackedDateSize: Math.round(Math.max(8, stackedTimeSize * 0.76))
 
     /* A vertical panel limits width, not height, so the largest usable size is
        the one whose longest reading still fits across. Text width grows
@@ -75,7 +75,7 @@ MouseArea {
         if (showTime && timeRef.width > 0)
             limit = Math.min(limit, available * refSize / timeRef.width)
         if (dateText.length > 0 && dateRef.width > 0)
-            limit = Math.min(limit, available * refSize / dateRef.width / 0.72)
+            limit = Math.min(limit, available * refSize / dateRef.width / 0.82)
         if (showWeather && tempRef.width > 0)
             limit = Math.min(limit, (available - Kirigami.Units.smallSpacing)
                                     / (1.21 + 0.78 * tempRef.width / refSize))
@@ -260,7 +260,7 @@ MouseArea {
         Text {
             text: compact.dateText
             color: Kirigami.Theme.textColor
-            opacity: 0.65
+            opacity: 0.78
             font.pixelSize: compact.dateFontSize
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -290,7 +290,7 @@ MouseArea {
             Text {
                 text: compact.dateText
                 color: Kirigami.Theme.textColor
-                opacity: 0.65
+                opacity: 0.78
                 font.pixelSize: compact.dateFontSize
                 lineHeight: 0.9
                 lineHeightMode: Text.ProportionalHeight

@@ -59,12 +59,19 @@ MouseArea {
     readonly property int titleSize: twoLines ? stackedTitleSize : inlineTitleSize
     readonly property int artistSize: Math.round(Math.max(7, titleSize * 0.82))
 
+    /* The cover fills the panel; the equalizer and the buttons follow the
+       title size, so one text-size setting moves every part of the strip.
+       Their ceilings are what the panel can actually hold: a button box is a
+       quarter taller than its icon, so the icon stops at 0.78 of the height. */
     readonly property real artSize: Math.round(available)
-    readonly property real visualizerHeight: Math.round(available * 0.66)
+    readonly property real visualizerHeight: Math.round(Math.min(available * 0.92,
+                                                                 Math.max(available * 0.5,
+                                                                          titleSize * 1.3)))
     readonly property real visualizerWidth: visualizerStyle === "pulse"
                                             ? visualizerHeight
-                                            : Math.round(Math.max(12, visualizerBars * available * 0.17))
-    readonly property real buttonSize: Math.round(Math.max(10, available * 0.58))
+                                            : Math.round(Math.max(12, visualizerBars * visualizerHeight * 0.27))
+    readonly property real buttonSize: Math.round(Math.min(available * 0.78,
+                                                           Math.max(available * 0.5, titleSize * 1.1)))
     readonly property real textLimit: Math.round(Kirigami.Units.gridUnit * Math.max(4, textWidthUnits))
 
     readonly property string titleText: backend && backend.track.length > 0
