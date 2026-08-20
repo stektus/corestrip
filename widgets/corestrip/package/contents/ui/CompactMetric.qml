@@ -43,6 +43,13 @@ Item {
 
     property int revision: 0
     property real gaugeSize: Kirigami.Units.gridUnit
+    /* Text size from the settings, as a factor. Readouts are absolute point
+       sizes rather than shares of the panel, so this is what makes them
+       follow the setting; the plots and rings scale through gaugeSize. */
+    property real fontFactor: 1
+
+    readonly property real readoutPoint: Math.max(5, Kirigami.Theme.smallFont.pointSize * fontFactor)
+    readonly property real captionPoint: Math.max(5, (Kirigami.Theme.smallFont.pointSize - 1) * fontFactor)
 
     readonly property color liveColor: kind === "percent" ? Util.loadColor(metricColor, ratio) : metricColor
     readonly property bool labelFits: showLabel && gaugeSize >= 16
@@ -73,21 +80,21 @@ Item {
        and shoving the rest of the panel around — on every tick. */
     TextMetrics {
         id: captionMetrics
-        font.pointSize: Math.max(6, Kirigami.Theme.smallFont.pointSize - 1)
+        font.pointSize: metric.captionPoint
         font.capitalization: Font.AllUppercase
         text: metric.label + (metric.caption ? "  99.9 GiB" : "")
     }
 
     TextMetrics {
         id: readoutMetrics
-        font.pointSize: Kirigami.Theme.smallFont.pointSize
+        font.pointSize: metric.readoutPoint
         font.weight: Font.DemiBold
         text: metric.kind === "rate" ? "▾999.9M ▴999.9M" : "100%"
     }
 
     TextMetrics {
         id: singleLineMetrics
-        font.pointSize: Kirigami.Theme.smallFont.pointSize
+        font.pointSize: metric.readoutPoint
         font.weight: Font.DemiBold
         text: metric.kind === "rate"
               ? "▾999.9M ▴999.9M"
@@ -109,7 +116,7 @@ Item {
             text: metric.label
             color: Kirigami.Theme.textColor
             opacity: 0.6
-            font.pointSize: Math.max(6, Kirigami.Theme.smallFont.pointSize - 1)
+            font.pointSize: metric.captionPoint
             font.capitalization: Font.AllUppercase
             font.letterSpacing: 0.5
             Layout.alignment: Qt.AlignVCenter
@@ -203,7 +210,7 @@ Item {
                         text: metric.label
                         color: Kirigami.Theme.textColor
                         opacity: 0.55
-                        font.pointSize: Math.max(6, Kirigami.Theme.smallFont.pointSize - 1)
+                        font.pointSize: metric.captionPoint
                         font.capitalization: Font.AllUppercase
                         font.letterSpacing: 0.4
                         lineHeight: metric.lineSquash
@@ -215,7 +222,7 @@ Item {
                         text: metric.caption
                         color: Kirigami.Theme.textColor
                         opacity: 0.4
-                        font.pointSize: Math.max(6, Kirigami.Theme.smallFont.pointSize - 1)
+                        font.pointSize: metric.captionPoint
                         lineHeight: metric.lineSquash
                         lineHeightMode: Text.ProportionalHeight
                         elide: Text.ElideRight
@@ -234,7 +241,7 @@ Item {
                         text: metric.label
                         color: Kirigami.Theme.textColor
                         opacity: 0.55
-                        font.pointSize: Math.max(6, Kirigami.Theme.smallFont.pointSize - 1)
+                        font.pointSize: metric.captionPoint
                         font.capitalization: Font.AllUppercase
                         font.letterSpacing: 0.4
                     }
@@ -242,7 +249,7 @@ Item {
                     Text {
                         text: metric.valueText
                         color: metric.liveColor
-                        font.pointSize: Kirigami.Theme.smallFont.pointSize
+                        font.pointSize: metric.readoutPoint
                         font.weight: Font.DemiBold
                         lineHeight: metric.lineSquash
                         lineHeightMode: Text.ProportionalHeight
@@ -253,7 +260,7 @@ Item {
                         text: metric.caption
                         color: Kirigami.Theme.textColor
                         opacity: 0.45
-                        font.pointSize: Math.max(6, Kirigami.Theme.smallFont.pointSize - 1)
+                        font.pointSize: metric.captionPoint
                     }
                 }
 
@@ -264,14 +271,14 @@ Item {
                     Text {
                         text: "▾" + Util.shortRate(metric.downValue)
                         color: metric.metricColor
-                        font.pointSize: Math.max(6, Kirigami.Theme.smallFont.pointSize - 1)
+                        font.pointSize: metric.captionPoint
                         font.weight: Font.Medium
                     }
 
                     Text {
                         text: "▴" + Util.shortRate(metric.upValue)
                         color: Util.accent.disk
-                        font.pointSize: Math.max(6, Kirigami.Theme.smallFont.pointSize - 1)
+                        font.pointSize: metric.captionPoint
                         font.weight: Font.Medium
                     }
                 }
@@ -294,7 +301,8 @@ Item {
                 text: Math.round(metric.ratio * 100)
                 color: Kirigami.Theme.textColor
                 opacity: 0.85
-                font.pointSize: Math.max(5, Math.round(metric.gaugeSize * 0.34))
+                font.pointSize: Math.max(5, Math.round(Math.min(metric.gaugeSize * 0.52,
+                                                                metric.gaugeSize * 0.34 * metric.fontFactor)))
                 font.weight: Font.DemiBold
                 minimumPointSize: 5
                 fontSizeMode: Text.HorizontalFit
@@ -324,7 +332,8 @@ Item {
             text: metric.valueText
             color: metric.liveColor
             font.family: Kirigami.Theme.defaultFont.family
-            font.pointSize: Math.max(6, Math.round(metric.gaugeSize * 0.42))
+            font.pointSize: Math.max(6, Math.round(Math.min(metric.gaugeSize * 0.62,
+                                                            metric.gaugeSize * 0.42 * metric.fontFactor)))
             font.weight: Font.DemiBold
             horizontalAlignment: Text.AlignRight
             verticalAlignment: Text.AlignVCenter
@@ -376,7 +385,8 @@ Item {
                     anchors.right: parent.right
                     text: "▾ " + Util.shortRate(metric.downValue)
                     color: metric.metricColor
-                    font.pointSize: Math.max(5, Math.round(metric.gaugeSize * 0.3))
+                    font.pointSize: Math.max(5, Math.round(Math.min(metric.gaugeSize * 0.42,
+                                                                    metric.gaugeSize * 0.3 * metric.fontFactor)))
                     font.weight: Font.Medium
                 }
 
@@ -384,7 +394,8 @@ Item {
                     anchors.right: parent.right
                     text: "▴ " + Util.shortRate(metric.upValue)
                     color: Util.accent.disk
-                    font.pointSize: Math.max(5, Math.round(metric.gaugeSize * 0.3))
+                    font.pointSize: Math.max(5, Math.round(Math.min(metric.gaugeSize * 0.42,
+                                                                    metric.gaugeSize * 0.3 * metric.fontFactor)))
                     font.weight: Font.Medium
                 }
             }

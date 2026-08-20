@@ -22,9 +22,13 @@ MouseArea {
     property string style: Plasmoid.configuration.compactStyle
     property bool showLabels: Plasmoid.configuration.showLabels
     property bool showTemperature: Plasmoid.configuration.showTemperature
+    property int fontScale: Plasmoid.configuration.fontScale
     readonly property real padding: Math.round(Kirigami.Units.smallSpacing / 2)
+    readonly property real fontFactor: Math.max(0.5, Math.min(1.5, fontScale / 100))
+    /* The panel thickness is the hard limit; the text size only decides how
+       much of it a gauge is allowed to take. */
     readonly property real gaugeSize: Math.max(Kirigami.Units.gridUnit * 0.7,
-        Math.min(Kirigami.Units.gridUnit * 2.6,
+        Math.min(Kirigami.Units.gridUnit * 2.6 * fontFactor,
                  (vertical ? width : height) - padding * 2))
 
     readonly property var metricKeys: {
@@ -176,6 +180,7 @@ MouseArea {
                 showLabel: compact.showLabels
                 vertical: compact.vertical
                 gaugeSize: compact.gaugeSize
+                fontFactor: compact.fontFactor
                 revision: compact.backend ? compact.backend.historyTick : 0
 
                 ratio: compact.metricRatio(modelData)

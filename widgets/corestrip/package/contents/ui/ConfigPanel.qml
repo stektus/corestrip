@@ -15,6 +15,7 @@ KCM.SimpleKCM {
     property alias cfg_showDisk: diskBox.checked
     property alias cfg_showTemperature: temperatureBox.checked
     property alias cfg_showLabels: labelsBox.checked
+    property alias cfg_fontScale: scaleBox.value
     property string cfg_panelGpu
     property alias cfg_updateInterval: intervalBox.realValue
 
@@ -80,6 +81,22 @@ KCM.SimpleKCM {
             id: labelsBox
             text: "Label each gauge"
             enabled: styleBox.currentValue !== "combo"
+        }
+
+        QQC2.SpinBox {
+            id: scaleBox
+            Kirigami.FormData.label: "Text size:"
+            /* The panel thickness caps the plots and rings; past ~150 % only
+               the numbers would keep growing, which looks wrong. */
+            from: 50
+            to: 150
+            stepSize: 5
+            textFromValue: function (value) {
+                return value + " %"
+            }
+            valueFromText: function (text) {
+                return parseInt(text) || 100
+            }
         }
 
         QQC2.ComboBox {

@@ -61,11 +61,13 @@ Right-click the widget → *Configure Corestrip…*
 - Which metrics appear in the panel: processor, graphics, memory, network, disk
 - Temperatures next to the processor and graphics readouts
 - Which GPU is shown when the machine has more than one
+- Text size (50–150 %), which scales the readouts and the gauges together
 - Update interval (1–30 s, default 2 s)
 
 The readout adapts to the panel: tall panels get two lines (name and
 temperature above, value below), short ones fall back to a single
-`CPU 32% 51°` line. Widths are reserved for the widest possible value, so the
+`CPU 32% 51°` line. Raising the text size moves that line the same way — a
+panel too short for two lines of the chosen size uses one. Widths are reserved for the widest possible value, so the
 applet never resizes the panel while numbers change.
 
 **Details** — which sections the popup shows: per-core load, graphics cards,
