@@ -4,8 +4,9 @@
 
 First release.
 
-- Panel shows any combination of time, date, weekday and current weather; the
-  clock scales with panel height and stacks into two lines where they fit.
+- Panel shows any combination of time, date, weekday and current weather, in a
+  configurable order; a text size setting scales the whole strip at once, and
+  the clock stacks with the date into two lines where they fit.
 - Popup with current conditions, a seven-day forecast, a month view and the
   agenda for the selected day.
 - Weather from Open-Meteo — no account or API key.

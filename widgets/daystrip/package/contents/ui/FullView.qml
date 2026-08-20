@@ -15,10 +15,10 @@ Item {
     property date displayedMonth: new Date()
     property date selectedDate: new Date()
 
-    Layout.minimumWidth: Kirigami.Units.gridUnit * 20
-    Layout.preferredWidth: Kirigami.Units.gridUnit * 24
+    Layout.minimumWidth: Kirigami.Units.gridUnit * 24
+    Layout.preferredWidth: Kirigami.Units.gridUnit * 30
     Layout.minimumHeight: Kirigami.Units.gridUnit * 20
-    Layout.preferredHeight: Kirigami.Units.gridUnit * 34
+    Layout.preferredHeight: Kirigami.Units.gridUnit * 36
 
     Launcher {
         id: launcher

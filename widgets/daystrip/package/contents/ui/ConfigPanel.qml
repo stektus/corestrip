@@ -95,8 +95,10 @@ KCM.SimpleKCM {
         QQC2.SpinBox {
             id: scaleBox
             Kirigami.FormData.label: "Text size:"
-            from: 70
-            to: 200
+            /* Above ~150 % the clock would outgrow any panel and every value
+               would look the same, so the range stops where it still bites. */
+            from: 50
+            to: 150
             stepSize: 5
             textFromValue: function (value) {
                 return value + " %"

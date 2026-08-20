@@ -8,10 +8,11 @@ calendar, a seven-day forecast and your agenda one click away.
 ## What it shows
 
 **In the panel** — any combination of time, date, weekday and current weather,
-in whatever order you put them. The clock scales with the panel height, and a
-text size setting (70–200 %) takes it from discreet to unmissable. Time and
-date stack into two lines when they sit next to each other and the panel is
-tall enough; otherwise everything stays on one line. Widths are reserved for
+in whatever order you put them. Everything scales with the panel height, and a
+text size setting (50–150 %) moves the clock, the date and the weather together
+so the strip keeps its proportions. Time and date stack into two lines when
+they sit next to each other and the panel is tall enough; otherwise everything
+stays on one line. Widths are reserved for
 the longest reading, so the panel never shifts as the clock ticks.
 
 **In the popup**

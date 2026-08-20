@@ -45,13 +45,48 @@ MouseArea {
     }
     readonly property bool hasWeather: showWeather && backend && backend.weather !== null
 
-    /* Sizes come from the panel height and the user's scale, never from the
+    /* Sizes come from the panel thickness and the user's scale, never from the
        rendered text — deriving them from metrics would make the "do two lines
-       fit" test depend on its own outcome. */
-    readonly property int stackedTimeSize: Math.round(Math.max(9, Math.min(available * 0.95, available * 0.46 * fontFactor)))
-    readonly property int stackedDateSize: Math.round(Math.max(8, Math.min(available * 0.5, available * 0.26 * fontFactor)))
-    readonly property int inlineTimeSize: Math.round(Math.max(9, Math.min(available * 0.95, available * 0.6 * fontFactor)))
-    readonly property int inlineDateSize: Math.round(Math.max(8, Math.min(available * 0.8, available * 0.34 * fontFactor)))
+       fit" test depend on its own outcome.
+
+       Only the clock is measured against the panel; the date and the weather
+       are fixed shares of it. One scale then moves the whole strip together,
+       and a panel too short for the chosen scale shrinks every part by the
+       same amount instead of leaving the smaller ones behind. */
+    readonly property int inlineTimeSize: Math.round(Math.max(9, Math.min(available * 0.84,
+                                                                          available * 0.58 * fontFactor,
+                                                                          widthLimit * Math.min(1, fontFactor))))
+    readonly property int inlineDateSize: Math.round(Math.max(8, inlineTimeSize * 0.72))
+    readonly property int stackedTimeSize: Math.round(Math.max(9, Math.min(available * 0.52,
+                                                                           available * 0.46 * fontFactor,
+                                                                           widthLimit * Math.min(1, fontFactor))))
+    readonly property int stackedDateSize: Math.round(Math.max(8, stackedTimeSize * 0.68))
+
+    /* A vertical panel limits width, not height, so the largest usable size is
+       the one whose longest reading still fits across. Text width grows
+       linearly with the pixel size, so a single measurement at a reference
+       size answers that — measuring at the live size would tie the binding to
+       its own result. */
+    readonly property int refSize: 24
+    readonly property real widthLimit: {
+        if (!vertical)
+            return Number.POSITIVE_INFINITY
+        var limit = Number.POSITIVE_INFINITY
+        if (showTime && timeRef.width > 0)
+            limit = Math.min(limit, available * refSize / timeRef.width)
+        if (dateText.length > 0 && dateRef.width > 0)
+            limit = Math.min(limit, available * refSize / dateRef.width / 0.72)
+        if (showWeather && tempRef.width > 0)
+            limit = Math.min(limit, (available - Kirigami.Units.smallSpacing)
+                                    / (1.21 + 0.78 * tempRef.width / refSize))
+        return limit * 0.94
+    }
+
+    /* The weather keeps the inline proportions even when the clock is stacked:
+       it is a block of its own and would look starved beside two lines. */
+    readonly property int weatherTextSize: Math.round(Math.max(8, inlineDateSize * 1.08))
+    readonly property int weatherGlyphSize: Math.round(Math.max(12, Math.min(available,
+                                                                             weatherTextSize * 1.55)))
 
     /* Time and date share a stacked block only when they sit next to each
        other in the chosen order and the panel is tall enough. */
@@ -76,7 +111,8 @@ MouseArea {
         return timeIndex >= 0 && dateIndex >= 0 && Math.abs(timeIndex - dateIndex) === 1
     }
 
-    readonly property bool stacked: timeAndDateAdjacent
+    /* Vertical panels put every item on its own row already. */
+    readonly property bool stacked: timeAndDateAdjacent && !vertical
                                     && available >= stackedTimeSize * 1.15 + stackedDateSize * 1.3
 
     readonly property int timeFontSize: stacked ? stackedTimeSize : inlineTimeSize
@@ -113,6 +149,27 @@ MouseArea {
                         : (compact.dateFormat === "iso" ? "0000-00-00" : "30 Sep")
             return compact.showWeekday ? "Wed " + sample : sample
         }
+    }
+
+    /* The same samples at a fixed size, for the vertical width budget. */
+    TextMetrics {
+        id: timeRef
+        font.pixelSize: compact.refSize
+        font.weight: Font.DemiBold
+        text: timeMetrics.text
+    }
+
+    TextMetrics {
+        id: dateRef
+        font.pixelSize: compact.refSize
+        text: dateMetrics.text
+    }
+
+    TextMetrics {
+        id: tempRef
+        font.pixelSize: compact.refSize
+        font.weight: Font.Medium
+        text: "-00°"
     }
 
     hoverEnabled: true
@@ -168,8 +225,7 @@ MouseArea {
                 code: compact.hasWeather ? compact.backend.weather.code : 3
                 day: compact.hasWeather ? compact.backend.weather.isDay : true
                 opacity: compact.hasWeather ? 1 : 0.4
-                implicitWidth: Math.round(Math.max(12, Math.min(compact.available,
-                                                                compact.available * 0.7 * compact.fontFactor)))
+                implicitWidth: compact.weatherGlyphSize
                 implicitHeight: implicitWidth
             }
 
@@ -177,7 +233,7 @@ MouseArea {
                 text: compact.hasWeather ? Util.temperature(compact.backend.weather.temperature, "") : "--°"
                 color: Kirigami.Theme.textColor
                 opacity: compact.hasWeather ? 0.9 : 0.4
-                font.pixelSize: Math.round(compact.dateFontSize * 1.15)
+                font.pixelSize: compact.weatherTextSize
                 font.weight: Font.Medium
             }
         }
