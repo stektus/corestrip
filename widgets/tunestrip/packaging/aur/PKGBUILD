@@ -1,0 +1,32 @@
+# Maintainer: stektus <stektus@users.noreply.github.com>
+#
+# Template for publishing to the AUR. Before the first push:
+#   1. tag a release (v$pkgver) so the tarball below exists,
+#   2. run `updpkgsums` to replace the SKIP checksum with the real one,
+#   3. run `makepkg --printsrcinfo > .SRCINFO`,
+#   4. commit PKGBUILD and .SRCINFO to
+#      ssh://aur@aur.archlinux.org/plasma6-applets-tunestrip.git
+#
+pkgname=plasma6-applets-tunestrip
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="Plasma 6 panel widget for whatever is playing: art, equalizer and controls"
+arch=('any')
+url="https://github.com/stektus/corestrip"
+license=('MIT')
+depends=('plasma-workspace')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
+sha256sums=('SKIP')
+
+package() {
+    cd "$srcdir/${url##*/}-$pkgver/widgets/tunestrip"
+
+    local appletdir="$pkgdir/usr/share/plasma/plasmoids/io.github.stektus.tunestrip"
+    install -dm755 "$appletdir"
+    cp -r package/. "$appletdir/"
+    find "$appletdir" -type f -exec chmod 644 {} +
+    find "$appletdir" -type d -exec chmod 755 {} +
+
+    install -Dm644 "$srcdir/${url##*/}-$pkgver/LICENSE" \
+        "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}

@@ -7,10 +7,13 @@ scripts, no background daemons of their own.
 |---|---|
 | [Corestrip](widgets/corestrip/) | CPU, GPU, memory, network and disk load, with a detail popup |
 | [Daystrip](widgets/daystrip/) | Clock, date and weather, with a calendar, forecast and agenda popup |
+| [Tunestrip](widgets/tunestrip/) | What is playing: album art, an animated equalizer and controls |
 
 ![Corestrip](widgets/corestrip/docs/screenshot.png)
 
 ![Daystrip](widgets/daystrip/docs/screenshot.png)
+
+![Tunestrip](widgets/tunestrip/docs/screenshot.png)
 
 ## Install
 

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+                          http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
+    <kcfgfile name=""/>
+
+    <group name="General">
+        <entry name="showArt" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="showVisualizer" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="showText" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="showControls" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="panelOrder" type="String">
+            <!-- comma separated: art, visualizer, text, controls -->
+            <default>art,visualizer,text,controls</default>
+        </entry>
+        <entry name="fontScale" type="Int">
+            <!-- percent; scales the panel readouts -->
+            <default>100</default>
+        </entry>
+        <entry name="textWidthUnits" type="Int">
+            <!-- widest the title block may get, in grid units -->
+            <default>12</default>
+        </entry>
+        <entry name="showArtistLine" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="scrollText" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="progressLine" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="hideWhenIdle" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="wheelVolume" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="middleClickPause" type="Bool">
+            <default>true</default>
+        </entry>
+    </group>
+
+    <group name="Visualizer">
+        <entry name="visualizerStyle" type="String">
+            <!-- bars, blocks, wave, dots, pulse -->
+            <default>bars</default>
+        </entry>
+        <entry name="visualizerBars" type="Int">
+            <default>7</default>
+        </entry>
+        <entry name="visualizerSpeed" type="Int">
+            <!-- percent of the default pace -->
+            <default>100</default>
+        </entry>
+        <entry name="visualizerColor" type="String">
+            <!-- accent, album, theme -->
+            <default>album</default>
+        </entry>
+        <entry name="visualizerWhenPaused" type="Bool">
+            <default>false</default>
+        </entry>
+    </group>
+
+    <group name="Popup">
+        <entry name="popupArt" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="popupSeek" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="popupVolume" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="popupVisualizer" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="popupPlayers" type="Bool">
+            <default>true</default>
+        </entry>
+    </group>
+</kcfg>

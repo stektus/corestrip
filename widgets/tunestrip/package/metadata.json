@@ -1,0 +1,21 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "stektus@users.noreply.github.com",
+                "Name": "stektus"
+            }
+        ],
+        "BugReportUrl": "https://github.com/stektus/corestrip/issues",
+        "Category": "Multimedia",
+        "Description": "What is playing, with album art, an animated equalizer and controls in the panel",
+        "Icon": "media-playback-start",
+        "Id": "io.github.stektus.tunestrip",
+        "License": "MIT",
+        "Name": "Tunestrip",
+        "Version": "1.0.0",
+        "Website": "https://github.com/stektus/corestrip"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0"
+}

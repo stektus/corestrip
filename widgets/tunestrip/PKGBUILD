@@ -1,0 +1,23 @@
+# Maintainer: stektus <stektus@users.noreply.github.com>
+#
+# Builds from this checkout: run makepkg in this directory.
+# For the AUR package see packaging/aur/.
+pkgname=plasma6-applets-tunestrip
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="Plasma 6 panel widget for whatever is playing: art, equalizer and controls"
+arch=('any')
+url="https://github.com/stektus/corestrip"
+license=('MIT')
+depends=('plasma-workspace')
+source=()
+
+package() {
+    local appletdir="$pkgdir/usr/share/plasma/plasmoids/io.github.stektus.tunestrip"
+    install -dm755 "$appletdir"
+    cp -r "$startdir/package/." "$appletdir/"
+    find "$appletdir" -type f -exec chmod 644 {} +
+    find "$appletdir" -type d -exec chmod 755 {} +
+
+    install -Dm644 "$startdir/../../LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
