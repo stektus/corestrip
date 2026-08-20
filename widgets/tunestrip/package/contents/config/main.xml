@@ -16,7 +16,7 @@
             <default>true</default>
         </entry>
         <entry name="showControls" type="Bool">
-            <default>false</default>
+            <default>true</default>
         </entry>
         <entry name="panelOrder" type="String">
             <!-- comma separated: art, visualizer, text, controls -->
